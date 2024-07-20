@@ -77,7 +77,6 @@ multiprocess==0.70.16
 murmurhash==1.0.10
 nest-asyncio==1.5.5
 nltk==3.8.1
-numba==0.59.1
 numpy==1.23.2
 openai-whisper==20231117
 opencv-python==4.10.0.84
