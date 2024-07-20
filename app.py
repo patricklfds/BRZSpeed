@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import pandas as pd
+import os
 
-app = Flask(__name__)
+# Define the path to the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
+# Initialize the Flask application with the custom template folder path
+app = Flask(__name__, template_folder=current_dir)
 
+# Load the dataset
 df = pd.read_csv('data.csv')
 
 @app.route('/')
