@@ -70,7 +70,7 @@ kiwisolver==1.4.4
 langcodes==3.4.0
 language_data==1.2.0
 linkedin-scraper==2.11.2
-llvmlite==0.42.0
+llvmlite==0.41.1
 lxml==4.9.1
 marisa-trie==1.2.0
 markdown-it-py==3.0.0
