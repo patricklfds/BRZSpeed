@@ -124,7 +124,6 @@ pyee==8.2.2
 Pygments==2.13.0
 pyogrio==0.9.0
 pyparsing==3.0.9
-pypiwin32==223
 pyppeteer==1.0.2
 pyproj==3.5.0
 pyquery==1.4.3
