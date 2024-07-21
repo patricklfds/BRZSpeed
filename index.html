@@ -12,7 +12,7 @@
             --secondary-color: #4a90e2;
             --background-color: #0a0a0a;
             --text-color: #e0e0e0;
-            --container-bg: #1e1e1e;
+            --container-bg: rgba(30, 30, 30, 0.8);
             --input-bg: #2c2c2c;
             --input-border: #3d3d3d;
             --hover-color: #3a3a3a;
@@ -20,7 +20,6 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
             color: var(--text-color);
             margin: 0;
             padding: 0;
@@ -28,31 +27,42 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-image: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            background: 
+                linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%),
+                radial-gradient(circle at top left, rgba(138, 43, 226, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at bottom right, rgba(74, 144, 226, 0.08) 0%, transparent 50%),
+                var(--background-color);
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+            z-index: -1;
         }
 
         .container {
             background-color: var(--container-bg);
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            padding: 40px;
+            padding: 40px 30px;
             text-align: center;
-            max-width: 500px;
-            width: 90%;
+            max-width: 550px;
+            width: 85%;
             position: relative;
-            overflow: hidden;
-        }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
-            transform: rotate(30deg);
-            z-index: -1;
+            overflow: visible;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
@@ -88,16 +98,28 @@
             transform: scaleX(1);
         }
 
-        p {
+        .intro-text {
+            text-align: center;
+            margin: 0 auto 30px;
             font-size: 1.1rem;
             color: var(--text-color);
-            margin-bottom: 30px;
-            line-height: 1.6;
+            width: 100%;
+            max-width: none;
+            position: relative;
+            left: 0;
+            transform: none;
+            white-space: normal;
+            word-wrap: break-word;
         }
 
         .input-group {
             position: relative;
-            margin-bottom: 20px;
+            margin: 0 auto 20px;
+            width: 155%;
+            max-width: 775px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
         }
 
         #city {
@@ -132,7 +154,9 @@
         }
 
         .submit-btn {
-            width: 100%;
+            display: block;
+            width: 155%;
+            max-width: 775px;
             height: 60px;
             font-size: 18px;
             font-weight: bold;
@@ -146,47 +170,44 @@
             letter-spacing: 1px;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.3s ease;
             box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
+            margin: 0 auto;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .submit-btn:hover {
+            animation: pulse 1.5s infinite;
         }
 
         .submit-btn::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
-            transform: scale(0);
-            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
             opacity: 0;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+            transition: opacity 0.6s ease-out;
         }
 
         .submit-btn:hover::before {
-            transform: scale(1);
             opacity: 1;
         }
 
-        @keyframes glow {
+        @keyframes pulse {
             0% {
-                box-shadow: 0 0 5px rgba(138, 43, 226, 0.5), 0 0 10px rgba(138, 43, 226, 0.5);
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.5);
             }
-            50% {
-                box-shadow: 0 0 20px rgba(138, 43, 226, 0.7), 0 0 30px rgba(138, 43, 226, 0.7);
+            70% {
+                box-shadow: 0 0 0 15px rgba(138, 43, 226, 0);
             }
             100% {
-                box-shadow: 0 0 5px rgba(138, 43, 226, 0.5), 0 0 10px rgba(138, 43, 226, 0.5);
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
             }
-        }
-
-        .submit-btn:hover {
-            animation: glow 1.5s infinite;
         }
 
         @media (max-width: 480px) {
@@ -198,29 +219,107 @@
                 font-size: 2rem;
             }
         }
+
+        .custom-autocomplete {
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.98);
+            border: 1px solid var(--input-border);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            padding: 8px 0;
+            list-style-type: none;
+            margin: 0;
+            width: calc(100% - 2px);
+            z-index: 3;
+        }
+
+        .custom-autocomplete li {
+            padding: 8px 15px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .custom-autocomplete li:hover {
+            background-color: var(--hover-color);
+            transform: translateX(5px);
+        }
+
+        /* Rounded scrollbar styling */
+        .custom-autocomplete::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-autocomplete::-webkit-scrollbar-thumb {
+            background-color: var(--input-border);
+            border-radius: 4px;
+            border: 2px solid rgba(30, 30, 30, 0.98);
+        }
+
+        .custom-autocomplete::-webkit-scrollbar-track {
+            background-color: transparent;
+            border-radius: 0 0 12px 0;
+        }
+
+        /* For Firefox */
+        .custom-autocomplete {
+            scrollbar-width: thin;
+            scrollbar-color: var(--input-border) transparent;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script>
         $(function() {
-            $("#city").autocomplete({
-                source: function(request, response) {
+            var $input = $("#city");
+            var $dropdown = $("<ul>").addClass("custom-autocomplete").hide().insertAfter($input);
+
+            function positionDropdown() {
+                var inputPos = $input.position();
+                var inputHeight = $input.outerHeight();
+                var inputWidth = $input.outerWidth();
+                
+                $dropdown.css({
+                    top: inputPos.top + inputHeight,
+                    left: inputPos.left,
+                    width: inputWidth
+                });
+            }
+
+            $input.on("input", function() {
+                var query = $(this).val();
+                if (query.length >= 2) {
                     $.ajax({
                         url: "/suggestions",
-                        data: {
-                            q: request.term
-                        },
+                        data: { q: query },
                         success: function(data) {
-                            response($.map(data, function(item) {
-                                return {
-                                    label: item.City + ", " + item.State,
-                                    value: item.City + ", " + item.State
-                                };
-                            }));
+                            $dropdown.empty().show();
+                            data.forEach(function(item) {
+                                $("<li>")
+                                    .text(item.City + ", " + item.State)
+                                    .appendTo($dropdown)
+                                    .on("click", function() {
+                                        $input.val($(this).text());
+                                        $dropdown.hide();
+                                    });
+                            });
+                            positionDropdown();
                         }
                     });
-                },
-                minLength: 2
+                } else {
+                    $dropdown.hide();
+                }
+            });
+
+            $(window).on("resize", positionDropdown);
+
+            $(document).on("click", function(event) {
+                if (!$(event.target).closest(".custom-autocomplete, #city").length) {
+                    $dropdown.hide();
+                }
             });
         });
     </script>
@@ -228,11 +327,11 @@
 <body>
     <div class="container">
         <h1>BRZSPEED</h1>
-        <p>Find the fastest internet carrier in your city. Enter your location below to get started!</p>
-        <form action="/city" method="post">
+        <p class="intro-text">Find the fastest internet carrier in your city. Enter your location below to get started!</p>
+        <form action="/city" method="post" autocomplete="off">
             <div class="input-group">
                 <i class="fas fa-map-marker-alt input-icon"></i>
-                <input type="text" id="city" name="city" placeholder="Enter your city">
+                <input type="text" id="city" name="city" placeholder="Enter your city" autocomplete="off">
             </div>
             <button type="submit" class="submit-btn">Find Fast Internet</button>
         </form>
