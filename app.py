@@ -2,14 +2,17 @@ from flask import Flask, render_template, request, jsonify
 import pandas as pd
 import os
 
-# Define the path to the current directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Initialize the Flask application with the custom template folder path
 app = Flask(__name__, template_folder=current_dir)
 
-# Load the dataset
 df = pd.read_csv('data.csv')
+
+def calculate_speed_percentile(city_speed):
+    all_speeds = df['Speed'].unique()
+    slower_cities = sum(1 for speed in all_speeds if speed < city_speed)
+    percentile = (slower_cities / len(all_speeds)) * 100
+    return round(percentile, 1)
 
 @app.route('/')
 def index():
@@ -21,7 +24,14 @@ def city():
         city_state = request.form['city']
         city, state = city_state.split(', ')
         city_data = df[(df['City'] == city) & (df['State'] == state)]
-        return render_template('city.html', city=city, state=state, data=city_data.iterrows())
+        
+        if city_data.empty:
+            return "City not found", 404
+
+        max_speed = city_data['Speed'].max()
+        percentile = calculate_speed_percentile(max_speed)
+        
+        return render_template('city.html', city=city, state=state, data=city_data.iterrows(), percentile=percentile)
     except KeyError as e:
         return f"KeyError: {str(e)}", 400
 
