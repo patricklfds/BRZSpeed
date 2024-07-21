@@ -4,88 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BRZ Speed</title>
-    <link rel="stylesheet" href="styles.css"> 
     <style>
+        :root {
+            --primary-color: #8a2be2;
+            --secondary-color: #4a90e2;
+            --background-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --container-bg: #1e1e1e;
+            --input-bg: #2c2c2c;
+            --input-border: #3d3d3d;
+            --hover-color: #3a3a3a;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5; /* Light grey background */
-            color: #333; /* Dark grey text */
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            background-image: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
         }
 
         .container {
-            background-color: #ffffff; /* White background */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            padding: 20px;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            padding: 40px 20px;
             text-align: center;
-            width: 100%;
-            max-width: 600px;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
+            transform: rotate(30deg);
+            z-index: -1;
         }
 
         h1 {
-            font-size: 1.5rem;
-            color: #333;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            position: relative;
+            padding-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        h1:hover::after {
+            transform: scaleX(1);
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
         }
 
         th, td {
-            padding: 10px;
-            border: 1px solid #ddd; /* Light border */
+            padding: 16px;
             text-align: left;
         }
 
         th {
-            background-color: #007bff; /* Blue background for header */
-            color: #ffffff; /* White text */
+            color: #ffffff;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9; /* Light grey rows */
+        td {
+            background-color: var(--container-bg);
+            border-bottom: 1px solid var(--input-border);
         }
 
-        tr:hover {
-            background-color: #f1f1f1; /* Slightly darker grey on hover */
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background-color: var(--input-bg);
+        }
+
+        tr:hover td {
+            background-color: var(--hover-color);
+        }
+
+        .percentile-info {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: var(--input-bg);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .percentile-info p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .percentile-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
         }
 
         a {
-            color: #007bff; /* Blue link */
-            text-decoration: none;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
             font-weight: bold;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3);
         }
 
         a:hover {
-            text-decoration: underline; /* Underline on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            th, td {
+                padding: 12px 8px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>The fastest mobile carrier in {{ city }}, {{ state }} is:</h1>
+        <h1>BRZSPEED</h1>
+        <h2>Fastest mobile carrier in {{ city }}, {{ state }}</h2>
         <table>
-            <tr>
-                <th>Carrier</th>
-                <th>Average Download Speed (Mbps)</th>
-            </tr>
-            {% for index, row in data %}
-            <tr>
-                <td>{{ row['Company'] }}</td>
-                <td>{{ '{:.1f}'.format(row['Speed']) }}</td>
-            </tr>
-            {% endfor %}
+            <thead>
+                <tr>
+                    <th>Carrier</th>
+                    <th>Average Download Speed (Mbps)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in data %}
+                <tr>
+                    <td>{{ row['Company'] }}</td>
+                    <td>{{ '{:.1f}'.format(row['Speed']) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
-        <a href="/">Back</a>
+        <div class="percentile-info">
+            <p>{{ city }}, {{ state }} has faster internet than <span class="percentile-value">{{ percentile }}%</span> of all cities.</p>
+        </div>
+        <a href="/">Back to Search</a>
     </div>
 </body>
 </html>
